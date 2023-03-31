@@ -17,7 +17,13 @@ export default function ListTodo() {
   useEffect(() => {
     axios
       .get('http://localhost:8000/api/todos')
-      .then((res) => setTodos(res.data))
+      .then((res) => {
+        if (res.data['hydra:member']) {
+          setTodos(res.data['hydra:member']);
+        }else{
+          setTodos(res.data);
+        }
+      })
       .catch((err) => console.log(err));
   }, []);
 
