@@ -63,7 +63,7 @@ export default function ListTodo() {
         <option value="DESC">DESC</option>
         <option value="ASC">ASC</option>
       </select>
-      <ul role="list" className="divide-y divide-gray-200">
+      <ul className="divide-y divide-gray-200">
         {todos.map((todo: Todo) => (
           <li key={todo.id} className="py-4">
             <div
