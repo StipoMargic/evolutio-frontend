@@ -11,7 +11,6 @@ export default function TodoForm() {
         text: formInputValue,
       })
       .then((res) => {
-        console.log(res);
         if (res.status === 201) {
           setFormInputValue('');
           window.location.reload();

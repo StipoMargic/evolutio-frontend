@@ -12,20 +12,32 @@ export interface Todo {
 
 export default function ListTodo() {
   const [todos, setTodos] = useState<Todo[] | []>([]);
+  const [isApiPlatform, setIsApiPlatform] = useState<boolean>(false);
+  const [order, setOrder] = useState<string>('DESC');
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get('http://localhost:8000/api/todos')
-      .then((res) => {
-        if (res.data['hydra:member']) {
+    if (isApiPlatform) {
+      axios
+        .get(`http://localhost:8000/api/todos?order[createdAt]=${order}`)
+        .then((res) => {
           setTodos(res.data['hydra:member']);
-        }else{
-          setTodos(res.data);
-        }
-      })
-      .catch((err) => console.log(err));
-  }, []);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      axios
+        .get('http://localhost:8000/api/todos?order=' + order)
+        .then((res) => {
+          if (res.data['hydra:member']) {
+            setTodos(res.data['hydra:member']);
+            setIsApiPlatform(true);
+          } else {
+            setTodos(res.data);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [order]);
 
   if (todos.length === 0) {
     return (
@@ -37,6 +49,20 @@ export default function ListTodo() {
 
   return (
     <div className="max-w-3xl mx-auto">
+      <label
+        htmlFor="order"
+        className="block text-sm font-medium leading-6 text-gray-900"
+      >
+        Order
+      </label>
+      <select
+        onChange={(e) => setOrder(e.target.value)}
+        defaultValue={order}
+        className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+      >
+        <option value="DESC">DESC</option>
+        <option value="ASC">ASC</option>
+      </select>
       <ul role="list" className="divide-y divide-gray-200">
         {todos.map((todo: Todo) => (
           <li key={todo.id} className="py-4">
