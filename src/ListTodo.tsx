@@ -37,7 +37,7 @@ export default function ListTodo() {
         })
         .catch((err) => console.log(err));
     }
-  }, [order]);
+  }, [order, isApiPlatform]);
 
   if (todos.length === 0) {
     return (
