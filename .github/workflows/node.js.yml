@@ -34,6 +34,7 @@ jobs:
         script: |
           cd /opt/evolutio-frontend
           git pull
+          docker stop react-frontend
           docker rm react-frontend
           docker image build . -t react-frontend
           docker run -p 80:3000 -d --name react-frontend react-frontend
