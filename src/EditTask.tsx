@@ -16,7 +16,7 @@ export default function EditTask() {
   const [todo, setTodo] = useState<Todo>(initValue);
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/api/todos/${id}`).then((res) => {
+    axios.get(`http://165.232.121.71:8000/api/todos/${id}`).then((res) => {
       setTodo(res.data);
     });
   }, [id]);
@@ -25,7 +25,7 @@ export default function EditTask() {
     e.preventDefault();
 
     axios
-      .put(`http://localhost:8000/api/todos/${id}`, todo)
+      .put(`http://165.232.121.71:8000/api/todos/${id}`, todo)
       .then((res) => {
         if (res.status === 200) {
           window.location.href = '/';

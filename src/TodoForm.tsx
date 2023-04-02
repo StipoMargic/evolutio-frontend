@@ -7,7 +7,7 @@ export default function TodoForm() {
   const sendTodoTask = (e: any) => {
     e.preventDefault();
     axios
-      .post('http://localhost:8000/api/todos', {
+      .post('http://165.232.121.71:8000/api/todos', {
         text: formInputValue,
       })
       .then((res) => {

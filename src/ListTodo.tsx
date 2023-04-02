@@ -19,14 +19,14 @@ export default function ListTodo() {
   useEffect(() => {
     if (isApiPlatform) {
       axios
-        .get(`http://localhost:8000/api/todos?order[createdAt]=${order}`)
+        .get(`http://165.232.121.71:8000/api/todos?order[createdAt]=${order}`)
         .then((res) => {
           setTodos(res.data['hydra:member']);
         })
         .catch((err) => console.log(err));
     } else {
       axios
-        .get('http://localhost:8000/api/todos?order=' + order)
+        .get('http://165.232.121.71:8000/api/todos?order=' + order)
         .then((res) => {
           if (res.data['hydra:member']) {
             setTodos(res.data['hydra:member']);
